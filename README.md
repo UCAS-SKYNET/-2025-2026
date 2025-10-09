@@ -5,7 +5,7 @@ ___
 This is our robot for the 2025-2026 first tech robotics challenge, Decode. 
 
 
-## Exectuion And Usage
+## Set up and Controls
 ___
 [Insert step by step tutourial on how we connected robot to computer and extracted code]
 
@@ -15,7 +15,6 @@ ___
 + Omnidirectional Movement
 + __
 + __
-
 
 ## The Team
 ___
