@@ -102,6 +102,7 @@ ___
 ## Contact information
 This is used only for robotics if future years need to contact us no spamming
 + Tate Morgan (tate.k.morgan@gmail.com or )
++ Jonas Fairchild (jonasfairchild@gmail.com)
 + Liam Perl (liamperl@gmail.com)
 + Jackson Clark (RandomGodofstupidity@gmail.com)
 
