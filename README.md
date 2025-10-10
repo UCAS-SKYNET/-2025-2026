@@ -100,10 +100,10 @@ ___
 [Get paragraph from Mirai's google doc]
 
 ## Contact information
-This is used only for robotics if future years need to contact us
-+ Tate M (tate.k.morgan@gmail.com or )
-+ 
-+ 
+This is used only for robotics if future years need to contact us no spamming
++ Tate Morgan (tate.k.morgan@gmail.com or )
++ Liam Perl (liamperl@gmail.com)
++ Jackson Clark (RandomGodofstupidity@gmail.com)
 
 
 ## Change Log
