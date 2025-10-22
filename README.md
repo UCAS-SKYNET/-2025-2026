@@ -48,56 +48,6 @@ ___
 + Luccianna
 + Santiago
 
-## Team Informtation
-___
-#### Mrs. Larose
-[Get paragraph from Mirai's google doc]
-#### Mirai H
-[Get paragraph from Mirai's google doc]
-#### Dirk J
-[Get paragraph from Mirai's google doc]
-#### Tate M
-[Get paragraph from Mirai's google doc]
-#### Pryor B
-[Get paragraph from Mirai's google doc]
-#### Dirk Jones
-[Get paragraph from Mirai's google doc]
-#### Jonas F
-[Get paragraph from Mirai's google doc]
-#### Alexander A
-[Get paragraph from Mirai's google doc]
-#### Elijah
-[Get paragraph from Mirai's google doc]
-#### Liam P
-[Get paragraph from Mirai's google doc]
-#### Jack C
-[Get paragraph from Mirai's google doc]
-#### Boston B
-[Get paragraph from Mirai's google doc]
-#### Aiden S
-[Get paragraph from Mirai's google doc]
-#### Anna B
-[Get paragraph from Mirai's google doc]
-#### Luccianna M
-[Get paragraph from Mirai's google doc]
-#### Santiago P
-[Get paragraph from Mirai's google doc]
-#### Bennet R
-[Get paragraph from Mirai's google doc]
-#### Luccianna
-[Get paragraph from Mirai's google doc]
-#### Anna B
-[Get paragraph from Mirai's google doc]
-#### Aiden S
-[Get paragraph from Mirai's google doc]
-#### Issac C
-[Get paragraph from Mirai's google doc]
-#### Mirai H
-[Get paragraph from Mirai's google doc]
-#### Luccianna M
-[Get paragraph from Mirai's google doc]
-#### Santiago P
-[Get paragraph from Mirai's google doc]
 
 ## Contact information
 This is used only for robotics if future years need to contact us no spamming
@@ -105,6 +55,8 @@ This is used only for robotics if future years need to contact us no spamming
 + Jonas Fairchild (jonasfairchild@gmail.com)
 + Liam Perl (liamperl@gmail.com)
 + Jackson Clark (RandomGodofstupidity@gmail.com)
++ Elijah hawkins (elidudebuddy@gmail.com)
++ Mirai Hsiao (mhsiao2017@gmail.com)
 
 
 ## Change Log
