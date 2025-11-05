@@ -57,7 +57,7 @@ This is used only for robotics if future years need to contact us no spamming
 + Jackson Clark (RandomGodofstupidity@gmail.com)
 + Elijah hawkins (elidudebuddy@gmail.com)
 + Mirai Hsiao (mhsiao2017@gmail.com)
-
++ Dirk Jones (kauliajones@gmail.com)
 
 ## Change Log
 May use in future may not
