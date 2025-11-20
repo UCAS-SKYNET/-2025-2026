@@ -23,15 +23,16 @@ ___
 + Mirai: Team Leader
 + Dirk: Rules Expert
 ### Programmers
-+ Tate
++ Tate (Leader)
 + Pryor
 + Dirk
 + Jonas
 + Alexander
++ Jack
++ Paxton
 ### Engineers
 + Elijah: Engineer Leader
 + Liam
-+ Jack
 + Boston
 + Aiden
 + Anna
