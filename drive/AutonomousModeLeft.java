@@ -30,11 +30,11 @@ public class AutonomousModeLeft extends LinearOpMode {
     private DcMotor backRight;
     private DcMotor frontLeft;
     private DcMotor frontRight;
-    private DcMotor leftShoulder;
-    private DcMotor rightShoulder;
+    //private DcMotor leftShoulder;
+    //private DcMotor rightShoulder;
     //private Servo elbow1;
     //private Servo elbow2;
-    private DcMotor elbow;
+    //private DcMotor elbow;
     
     private ElapsedTime runtime = new ElapsedTime();
     
@@ -55,11 +55,11 @@ public class AutonomousModeLeft extends LinearOpMode {
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        leftShoulder = hardwareMap.get(DcMotor.class, "left shoulder");
-        rightShoulder = hardwareMap.get(DcMotor.class, "right shoulder");
+        //leftShoulder = hardwareMap.get(DcMotor.class, "left shoulder");
+        //rightShoulder = hardwareMap.get(DcMotor.class, "right shoulder");
         //elbow1 = hardwareMap.get(Servo.class, "elbow1");
         //elbow2 = hardwareMap.get(Servo.class, "elbow2");
-        elbow = hardwareMap.get(DcMotor.class, "elbow");
+        //elbow = hardwareMap.get(DcMotor.class, "elbow");
         
         waitForStart();
         

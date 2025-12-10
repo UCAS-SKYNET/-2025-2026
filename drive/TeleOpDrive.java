@@ -58,12 +58,12 @@ public class TeleOpDrive extends LinearOpMode {
     private DcMotor backRight;
     private DcMotor frontLeft;
     private DcMotor frontRight;
-    private DcMotor leftShoulder;
-    private DcMotor rightShoulder;
-    private DcMotor elbow;
+    //private DcMotor leftShoulder;
+    //private DcMotor rightShoulder;
+    //private DcMotor elbow;
     //private Servo elbow1;
     //private Servo elbow2;
-    private Servo claw;
+    //private Servo claw;
     
     private IMU imu;
     
@@ -81,28 +81,28 @@ public class TeleOpDrive extends LinearOpMode {
         backRight.setPower(-(y-x+right_stick));
     }
     
-    public void shoulderRotation(double amount) {
-        leftShoulder.setPower(amount);
-        rightShoulder.setPower(-amount);
-    }
+    //public void shoulderRotation(double amount) {
+        //leftShoulder.setPower(amount);
+        //rightShoulder.setPower(-amount);
+   // }
     
-    public void elbowRotation(double direction) {
+    //public void elbowRotation(double direction) {
         
-        if (direction == 1){
-            elbow.setPower(0.8);
-        } else if (direction == -1) {
-            elbow.setPower(-0.1);
-        } else {
-            elbow.setPower(0.25);
+        //if (direction == 1){
+            //elbow.setPower(0.8);
+        //} else if (direction == -1) {
+            //elbow.setPower(-0.1);
+        //} else {
+            //elbow.setPower(0.25);
             //elbow.setPower(0);
-        }
+        //}
         
         // Correction if needed
         /*if (Math.abs(elbow1.getPosition() + elbow2.getPosition() - 0.5) > 0.03) {
             telemetry.addData("ouch", "ies");
             elbow1.setPosition(0.5 - elbow2.getPosition());
         }*/
-    }
+    //}
 
     @Override
     public void runOpMode() {
@@ -112,12 +112,12 @@ public class TeleOpDrive extends LinearOpMode {
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        leftShoulder = hardwareMap.get(DcMotor.class, "left shoulder");
-        rightShoulder = hardwareMap.get(DcMotor.class, "right shoulder");
-        elbow = hardwareMap.get(DcMotor.class, "elbow");
+        //leftShoulder = hardwareMap.get(DcMotor.class, "left shoulder");
+        //rightShoulder = hardwareMap.get(DcMotor.class, "right shoulder");
+        //elbow = hardwareMap.get(DcMotor.class, "elbow");
         //elbow1 = hardwareMap.get(Servo.class, "elbow1");
         //elbow2 = hardwareMap.get(Servo.class, "elbow2");
-        claw = hardwareMap.get(Servo.class, "claw");
+        //claw = hardwareMap.get(Servo.class, "claw");
 
 
         
@@ -212,20 +212,20 @@ public class TeleOpDrive extends LinearOpMode {
             
             
             
-            if (Math.abs(this.gamepad2.left_stick_y) < 0.5) {
-                if (this.gamepad2.left_trigger > 0.4) {
-                    elbowRotation(-1);
-                } else if (this.gamepad2.left_bumper) {
-                    elbowRotation(1);
-                } else {
-                    elbowRotation(0);
-                }
+            //if (Math.abs(this.gamepad2.left_stick_y) < 0.5) {
+                //if (this.gamepad2.left_trigger > 0.4) {
+                    //elbowRotation(-1);
+                //} else if (this.gamepad2.left_bumper) {
+                    //elbowRotation(1);
+                //} else {
+                    //elbowRotation(0);
+                //}
                 
-                if (this.gamepad2.right_trigger > 0.3) {
-                    shoulderRotation(0.3);
-                } else if (this.gamepad2.right_bumper) {
-                    shoulderRotation(-0.5);
-                } else {
+                //if (this.gamepad2.right_trigger > 0.3) {
+                    //shoulderRotation(0.3);
+                //} else if (this.gamepad2.right_bumper) {
+                    //shoulderRotation(-0.5);
+               // } else {
                     /*
                     if (jiggler >= 3) {
                         shoulderRotation(-0.2);
@@ -235,30 +235,30 @@ public class TeleOpDrive extends LinearOpMode {
                     } else {
                         shoulderRotation(0.2);
                     }*/
-                    shoulderRotation(-0.1);
-                }
+                    //shoulderRotation(-0.1);
+                //}
             //jiggler++;
                 
-            } else {
-                if (this.gamepad2.left_stick_y > 0) {
-                    shoulderRotation(0.5);
-                    elbowRotation(1);
-                } else {
-                    elbowRotation(-1);
-                    shoulderRotation(-0.5);
-                }
-            }
+            //} else {
+                //if (this.gamepad2.left_stick_y > 0) {
+                    //shoulderRotation(0.5);
+                    //elbowRotation(1);
+                //} else {
+                   // elbowRotation(-1);
+                    //shoulderRotation(-0.5);
+                //}
+            //}
             
-            if (this.gamepad2.dpad_down) {
-                elbow.setPower(-1.2);
-            }
+            //if (this.gamepad2.dpad_down) {
+               // elbow.setPower(-1.2);
+           // }
             
             // Set claw position
-            if (this.gamepad2.a) {
-                claw.setPosition(0.62);
-            } else if (this.gamepad2.b) {
-                claw.setPosition(0.12);
-            }
+            //if (this.gamepad2.a) {
+               // claw.setPosition(0.62);
+            //} else if (this.gamepad2.b) {
+                //claw.setPosition(0.12);
+            //}
             
             
             
