@@ -75,10 +75,10 @@ public class TeleOpDrive extends LinearOpMode {
         double x = power*Math.cos(direction);
         double y = power*Math.sin(direction);
         
-        frontLeft.setPower((y-x-right_stick)); 
-        frontRight.setPower((y+x+right_stick));
-        backLeft.setPower((y+x-right_stick));
-        backRight.setPower(-(y-x+right_stick));
+        frontLeft.setPower((y+x+right_stick)); 
+        frontRight.setPower((y-x-right_stick));
+        backLeft.setPower((y-x+right_stick));
+        backRight.setPower((y+x-right_stick));
     }
     
     //public void shoulderRotation(double amount) {
@@ -159,7 +159,7 @@ public class TeleOpDrive extends LinearOpMode {
         while (opModeIsActive()) {
             robotOrientation = imu.getRobotYawPitchRollAngles();
             x = (double)this.gamepad1.left_stick_x;
-            y = (double)this.gamepad1.left_stick_y;
+            y = (double)-this.gamepad1.left_stick_y;
             
             direction = Math.atan2(y, x);
             Yaw = robotOrientation.getYaw(AngleUnit.RADIANS);
@@ -203,7 +203,7 @@ public class TeleOpDrive extends LinearOpMode {
             
             
             if(this.gamepad1.left_trigger > 0.3) {
-                driveInDirection(relativeDirection, power, (double)this.gamepad1.right_stick_x * 2);
+                driveInDirection(relativeDirection, power, (double)this.gamepad1.right_stick_x);
             } else {
                 driveInDirection(relativeDirection, power, (double)this.gamepad1.right_stick_x);
             }
