@@ -72,8 +72,8 @@ public class TeleOpDrive extends LinearOpMode {
     
     
     public void driveInDirection(double direction, double power, double right_stick) {
-        double x = power*Math.cos(direction);
-        double y = power*Math.sin(direction);
+        double x = power*Math.sin(direction);
+        double y = power*Math.cos(direction);
         
         double fl = y + x + right_stick;
         double fr = y - x - right_stick;
