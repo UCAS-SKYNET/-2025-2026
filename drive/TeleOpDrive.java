@@ -75,10 +75,20 @@ public class TeleOpDrive extends LinearOpMode {
         double x = power*Math.cos(direction);
         double y = power*Math.sin(direction);
         
-        frontLeft.setPower((y+x+right_stick)); 
-        frontRight.setPower((y-x-right_stick));
-        backLeft.setPower((y-x+right_stick));
-        backRight.setPower((y+x-right_stick));
+        double fl = y + x + right_stick;
+        double fr = y - x - right_stick;
+        double bl = y - x + right_stick;
+        double br = y + x - right_stick;
+
+        double max = Math.max(1.0,
+            Math.max(Math.abs(fl),
+            Math.max(Math.abs(fr),
+            Math.max(Math.abs(bl), Math.abs(br)))));
+
+        frontLeft.setPower(fl / max);
+        frontRight.setPower(fr / max);
+        backLeft.setPower(bl / max);
+        backRight.setPower(br / max);
     }
     
     //public void shoulderRotation(double amount) {
@@ -112,6 +122,15 @@ public class TeleOpDrive extends LinearOpMode {
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+        
+        // Reverse left side motors
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        // Right side stays forward
+        frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+
         //leftShoulder = hardwareMap.get(DcMotor.class, "left shoulder");
         //rightShoulder = hardwareMap.get(DcMotor.class, "right shoulder");
         //elbow = hardwareMap.get(DcMotor.class, "elbow");
@@ -158,7 +177,7 @@ public class TeleOpDrive extends LinearOpMode {
         
         while (opModeIsActive()) {
             robotOrientation = imu.getRobotYawPitchRollAngles();
-            x = (double)-this.gamepad1.left_stick_x;
+            x = (double)this.gamepad1.left_stick_x;
             y = (double)-this.gamepad1.left_stick_y;
             
             direction = Math.atan2(y, x);
@@ -186,7 +205,7 @@ public class TeleOpDrive extends LinearOpMode {
     
     
             if(this.gamepad1.left_trigger > 0.3) {
-                power = Math.sqrt(x*x+y*y) * 1.5; // this is if we need to go fast
+                power = Math.min(1.0, Math.sqrt(x*x + y*y) * 1.5); // this is if we need to go fast
             } else {
                 power = Math.sqrt(x*x+y*y) * 0.5; // this is without the button, so it moves a little slower for precision
             }
@@ -203,10 +222,12 @@ public class TeleOpDrive extends LinearOpMode {
             
             
             if(this.gamepad1.left_trigger > 0.3) {
-                driveInDirection(relativeDirection, power, (double)this.gamepad1.right_stick_x);
-            } else {
-                driveInDirection(relativeDirection, power, (double)this.gamepad1.right_stick_x);
-            }
+                double turn = this.gamepad1.right_stick_x * 0.6;
+                driveInDirection(relativeDirection, power, turn);
+            } 
+            //else {
+            //    driveInDirection(relativeDirection, power, (double)this.gamepad1.right_stick_x);
+            //}
             
             
             
@@ -264,7 +285,7 @@ public class TeleOpDrive extends LinearOpMode {
             
             
             //telemetry.addData("Elbow", (double)elbow1.getPosition());
-            telemetry.addData("Left stick", (double)this.gamepad2.left_stick_y);
+            //telemetry.addData("Left stick", (double)this.gamepad2.left_stick_y);
             
             telemetry.addData("Status", "Running");
             telemetry.update();
