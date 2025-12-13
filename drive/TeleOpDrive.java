@@ -21,7 +21,7 @@ package org.firstinspires.ftc.teamcode.drive;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-import com.qualcomm.robotcore.hardware.Blinker;
+//import com.qualcomm.robotcore.hardware.Blinker;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -52,8 +52,8 @@ import java.lang.Math;
 @TeleOp
 
 public class TeleOpDrive extends LinearOpMode {
-    private Blinker control_Hub;
-    private Blinker expansion_Hub_2;
+    //private Blinker control_Hub;
+    //private Blinker expansion_Hub_2;
     private DcMotor backLeft;
     private DcMotor backRight;
     private DcMotor frontLeft;
@@ -116,8 +116,8 @@ public class TeleOpDrive extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        control_Hub = hardwareMap.get(Blinker.class, "Control Hub");
-        expansion_Hub_2 = hardwareMap.get(Blinker.class, "Expansion Hub 2");
+        //control_Hub = hardwareMap.get(Blinker.class, "Control Hub");
+        //expansion_Hub_2 = hardwareMap.get(Blinker.class, "Expansion Hub 2");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
@@ -130,6 +130,11 @@ public class TeleOpDrive extends LinearOpMode {
         // Right side stays forward
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //leftShoulder = hardwareMap.get(DcMotor.class, "left shoulder");
         //rightShoulder = hardwareMap.get(DcMotor.class, "right shoulder");
@@ -172,22 +177,32 @@ public class TeleOpDrive extends LinearOpMode {
         
         double jiggler = 0; // THIS WAS ETHAN'S IDEA
 
+        boolean lastStart = false;
+
         // run until the end of the match (driver presses STOP)
         
         
         while (opModeIsActive()) {
             robotOrientation = imu.getRobotYawPitchRollAngles();
-            x = (double)this.gamepad1.left_stick_x;
-            y = (double)-this.gamepad1.left_stick_y;
+
+            double turn = Math.abs(gamepad1.right_stick_x) > 0.05
+                ? gamepad1.right_stick_x * 0.6
+                : 0;
             
-            direction = Math.atan2(y, x);
-            if (Math.hypot(x, y) < 0.05) {
+            double rawX = gamepad1.left_stick_x;
+            double rawY = -gamepad1.left_stick_y;
+
+            if (Math.hypot(rawX, rawY) < 0.05) {
                 driveInDirection(0, 0, turn);
                 continue;
             }
+
+            x = rawX;
+            y = rawY;
+
+            direction = Math.atan2(x, y);
             Yaw = robotOrientation.getYaw(AngleUnit.RADIANS);
-            
-            Yaw = -Yaw; // These next few lines are all for translating the yaw into the same format as the joystick
+            relativeDirection = direction - Yaw; // These next few lines are all for translating the yaw into the same format as the joystick
             
             /*
             Yaw -= Math.PI/2;
@@ -198,13 +213,13 @@ public class TeleOpDrive extends LinearOpMode {
                 Yaw -= 2*Math.PI; 
             }
             */
-            relativeDirection = direction-Yaw;
+
             if (relativeDirection < -Math.PI) {
                 relativeDirection += 2*Math.PI;
             } else if (relativeDirection > Math.PI) {
                 relativeDirection -= 2*Math.PI;
             }
-            
+
             
     
     
@@ -214,22 +229,16 @@ public class TeleOpDrive extends LinearOpMode {
                 power = Math.min(1.0, Math.sqrt(x*x + y*y) * 0.5); // this is without the button, so it moves a little slower for precision
             }
             
-            if (gamepad1.start && gamepad1.back) {
+            if (gamepad1.start && !lastStart) {
                 imu.resetYaw();
-                telemetry.addLine("IMU RESET");
             }
+            lastStart = gamepad1.start;
             
-            telemetry.addData("Joystick Direction", String.valueOf(direction));
+            //telemetry.addData("Joystick Direction", String.valueOf(direction));
             //telemetry.addData("Yaw", String.valueOf(Yaw));
             //telemetry.addData("Relative Direction", String.valueOf(relativeDirection));
-            telemetry.addData("Drive Power", String.valueOf(power));
-            
-            
-            
-            double turn = Math.abs(gamepad1.right_stick_x) > 0.05
-                ? gamepad1.right_stick_x * 0.6
-                : 0;
-            
+            //telemetry.addData("Drive Power", String.valueOf(power));
+
             driveInDirection(relativeDirection, power, turn);            
             
             //if (Math.abs(this.gamepad2.left_stick_y) < 0.5) {
@@ -284,7 +293,7 @@ public class TeleOpDrive extends LinearOpMode {
             
             
             //telemetry.addData("Elbow", (double)elbow1.getPosition());
-            telemetry.addData("Left stick", (double)this.gamepad2.left_stick_y);
+            //telemetry.addData("Left stick", (double)this.gamepad2.left_stick_y);
             
             telemetry.addData("Status", "Running");
             telemetry.update();
