@@ -285,7 +285,7 @@ public class TeleOpDrive extends LinearOpMode {
             
             
             //telemetry.addData("Elbow", (double)elbow1.getPosition());
-            //telemetry.addData("Left stick", (double)this.gamepad2.left_stick_y);
+            telemetry.addData("Left stick", (double)this.gamepad2.left_stick_y);
             
             telemetry.addData("Status", "Running");
             telemetry.update();
