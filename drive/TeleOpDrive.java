@@ -225,7 +225,8 @@ public class TeleOpDrive extends LinearOpMode {
                 double turn = this.gamepad1.right_stick_x * 0.6;
                 driveInDirection(relativeDirection, power, turn);
             } else {
-                driveInDirection(relativeDirection, power, (double)this.gamepad1.right_stick_x);
+                double turn = this.gamepad1.right_stick_x * 0.6;
+                driveInDirection(relativeDirection, power, turn);
             }
             
             
