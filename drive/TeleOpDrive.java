@@ -181,6 +181,10 @@ public class TeleOpDrive extends LinearOpMode {
             y = (double)-this.gamepad1.left_stick_y;
             
             direction = Math.atan2(y, x);
+            if (Math.hypot(x, y) < 0.05) {
+                driveInDirection(0, 0, turn);
+                continue;
+            }
             Yaw = robotOrientation.getYaw(AngleUnit.RADIANS);
             
             Yaw = -Yaw; // These next few lines are all for translating the yaw into the same format as the joystick
@@ -207,11 +211,12 @@ public class TeleOpDrive extends LinearOpMode {
             if(this.gamepad1.left_trigger > 0.3) {
                 power = Math.min(1.0, Math.sqrt(x*x + y*y) * 1.5); // this is if we need to go fast
             } else {
-                power = Math.sqrt(x*x+y*y) * 0.5; // this is without the button, so it moves a little slower for precision
+                power = Math.min(1.0, Math.sqrt(x*x + y*y) * 0.5); // this is without the button, so it moves a little slower for precision
             }
             
-            if(this.gamepad1.start && this.gamepad1.dpad_up) {
+            if (gamepad1.start && gamepad1.back) {
                 imu.resetYaw();
+                telemetry.addLine("IMU RESET");
             }
             
             telemetry.addData("Joystick Direction", String.valueOf(direction));
@@ -221,17 +226,11 @@ public class TeleOpDrive extends LinearOpMode {
             
             
             
-            if(this.gamepad1.left_trigger > 0.3) {
-                double turn = this.gamepad1.right_stick_x * 0.6;
-                driveInDirection(relativeDirection, power, turn);
-            } else {
-                double turn = this.gamepad1.right_stick_x * 0.6;
-                driveInDirection(relativeDirection, power, turn);
-            }
+            double turn = Math.abs(gamepad1.right_stick_x) > 0.05
+                ? gamepad1.right_stick_x * 0.6
+                : 0;
             
-            
-            
-            
+            driveInDirection(relativeDirection, power, turn);            
             
             //if (Math.abs(this.gamepad2.left_stick_y) < 0.5) {
                 //if (this.gamepad2.left_trigger > 0.4) {
