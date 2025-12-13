@@ -158,7 +158,7 @@ public class TeleOpDrive extends LinearOpMode {
         
         while (opModeIsActive()) {
             robotOrientation = imu.getRobotYawPitchRollAngles();
-            x = (double)this.gamepad1.left_stick_x;
+            x = (double)-this.gamepad1.left_stick_x;
             y = (double)-this.gamepad1.left_stick_y;
             
             direction = Math.atan2(y, x);
