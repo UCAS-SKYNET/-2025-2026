@@ -122,7 +122,7 @@ public class TeleOpDrive extends LinearOpMode {
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        
+
         // Reverse left side motors
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -224,10 +224,9 @@ public class TeleOpDrive extends LinearOpMode {
             if(this.gamepad1.left_trigger > 0.3) {
                 double turn = this.gamepad1.right_stick_x * 0.6;
                 driveInDirection(relativeDirection, power, turn);
-            } 
-            //else {
-            //    driveInDirection(relativeDirection, power, (double)this.gamepad1.right_stick_x);
-            //}
+            } else {
+                driveInDirection(relativeDirection, power, (double)this.gamepad1.right_stick_x);
+            }
             
             
             
