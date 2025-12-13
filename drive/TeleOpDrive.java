@@ -189,8 +189,8 @@ public class TeleOpDrive extends LinearOpMode {
                 ? gamepad1.right_stick_x * 0.6
                 : 0;
             
-            double rawX = gamepad1.left_stick_x;
-            double rawY = -gamepad1.left_stick_y;
+            double rawX = -gamepad1.left_stick_x;
+            double rawY = gamepad1.left_stick_y;
 
             if (Math.hypot(rawX, rawY) < 0.05) {
                 driveInDirection(0, 0, turn);
