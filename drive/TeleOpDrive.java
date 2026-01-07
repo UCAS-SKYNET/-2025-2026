@@ -35,6 +35,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvPipeline;
+import org.opencv.core.Mat;
+import com.qualcomm.robotcore.hardware.WebcamName;
+
 import java.lang.Math;
 
 /**
@@ -66,6 +72,17 @@ public class TeleOpDrive extends LinearOpMode {
     //private Servo claw;
     
     private IMU imu;
+    private OpenCvCamera webcam;
+    private WebcamPipeline pipeline;
+    
+    // Simple pipeline to display webcam frames
+    public static class WebcamPipeline extends OpenCvPipeline {
+        @Override
+        public Mat processFrame(Mat input) {
+            // Simply return the frame as-is for display
+            return input;
+        }
+    }
     
     
     
@@ -158,6 +175,29 @@ public class TeleOpDrive extends LinearOpMode {
         );
         
         imu.initialize(params);
+        
+        // Initialize webcam
+        try {
+            int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+                "cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+            webcam = OpenCvCameraFactory.getInstance().createWebcam(
+                hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+            pipeline = new WebcamPipeline();
+            webcam.setPipeline(pipeline);
+            webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+                @Override
+                public void onOpened() {
+                    webcam.startStreaming(320, 240);
+                    telemetry.addData("Webcam", "Initialized");
+                }
+                @Override
+                public void onError(int errorCode) {
+                    telemetry.addData("Webcam Error", errorCode);
+                }
+            });
+        } catch (Exception e) {
+            telemetry.addData("Webcam", "Failed to initialize: " + e.getMessage());
+        }
         
         YawPitchRollAngles robotOrientation;
         double Yaw;
