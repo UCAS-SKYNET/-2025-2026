@@ -49,7 +49,7 @@ ___
 
 ## Contact information
 This is used only for robotics if future years need to contact us no spamming
-+ Tate Morgan (tate.k.morgan@gmail.com or )
++ Tate Morgan (tate.k.morgan@gmail.com)
 + Jonas Fairchild (jonasfairchild@gmail.com)
 + Liam Perl (liamperl@gmail.com)
 + Elijah hawkins (elidudebuddy@gmail.com)
