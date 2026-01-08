@@ -48,7 +48,7 @@ ___
 
 
 ## Contact information
-This is used only for robotics if future years need to contact us no spamming
+This is used only for robotics if future years need to contact us
 + Tate Morgan (tate.k.morgan@gmail.com)
 + Jonas Fairchild (jonasfairchild@gmail.com)
 + Liam Perl (liamperl@gmail.com)
