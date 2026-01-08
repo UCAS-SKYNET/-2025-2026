@@ -21,7 +21,7 @@ ___
 ### Important Personel
 + Mrs. Larose: Adult Supervisor
 + Mirai: Team Leader
-+ Dirk: Rules Expert
++ Dirk: Rules Expert/Secretary
 ### Programmers
 + Tate (Leader)
 + Pryor
@@ -52,6 +52,6 @@ This is used only for robotics if future years need to contact us
 + Tate Morgan (tate.k.morgan@gmail.com)
 + Jonas Fairchild (jonasfairchild@gmail.com)
 + Liam Perl (liamperl@gmail.com)
-+ Elijah hawkins (elidudebuddy@gmail.com)
++ Elijah Hawkins (elidudebuddy@gmail.com)
 + Mirai Hsiao (mhsiao2017@gmail.com)
 + Dirk Jones (kauliajones@gmail.com)
