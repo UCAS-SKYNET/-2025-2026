@@ -27,9 +27,6 @@ ___
 + Pryor
 + Dirk
 + Jonas
-+ Alexander
-+ Jack
-+ Paxton
 ### Engineers
 + Elijah: Engineer Leader
 + Liam
@@ -55,10 +52,6 @@ This is used only for robotics if future years need to contact us no spamming
 + Tate Morgan (tate.k.morgan@gmail.com or )
 + Jonas Fairchild (jonasfairchild@gmail.com)
 + Liam Perl (liamperl@gmail.com)
-+ Jackson Clark (RandomGodofstupidity@gmail.com)
 + Elijah hawkins (elidudebuddy@gmail.com)
 + Mirai Hsiao (mhsiao2017@gmail.com)
 + Dirk Jones (kauliajones@gmail.com)
-
-## Change Log
-May use in future may not
