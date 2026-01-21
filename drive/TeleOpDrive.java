@@ -92,10 +92,10 @@ public class TeleOpDrive extends LinearOpMode {
         double x = power*Math.cos(direction);
         double y = power*Math.sin(direction);
         
-        double fl = y + x + right_stick;
-        double fr = y - x - right_stick;
-        double bl = y - x + right_stick;
-        double br = y + x - right_stick;
+        double fl = y + x - right_stick;
+        double fr = y - x + right_stick;
+        double bl = y - x - right_stick;
+        double br = y + x + right_stick;
 
         double max = Math.max(1.0,
             Math.max(Math.abs(fl),
