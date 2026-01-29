@@ -16,30 +16,23 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FO
 DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
+
 package org.firstinspires.ftc.teamcode.drive;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-//import com.qualcomm.robotcore.hardware.Blinker;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AngularVelocity;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
-
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvPipeline;
-import org.opencv.core.Mat;
-import com.qualcomm.robotcore.hardware.WebcamName;
 
 import java.lang.Math;
 
@@ -55,39 +48,16 @@ import java.lang.Math;
  * Remove a @Disabled the on the next line or two (if present) to add this OpMode to the Driver Station OpMode list,
  * or add a @Disabled annotation to prevent this OpMode from being added to the Driver Station
  */
-@TeleOp
 
+@TeleOp
 public class TeleOpDrive extends LinearOpMode {
-    //private Blinker control_Hub;
-    //private Blinker expansion_Hub_2;
     private DcMotor backLeft;
     private DcMotor backRight;
     private DcMotor frontLeft;
     private DcMotor frontRight;
-    //private DcMotor leftShoulder;
-    //private DcMotor rightShoulder;
-    //private DcMotor elbow;
-    //private Servo elbow1;
-    //private Servo elbow2;
-    //private Servo claw;
     
     private IMU imu;
-    private OpenCvCamera webcam;
-    private WebcamPipeline pipeline;
-    
-    // Simple pipeline to display webcam frames
-    public static class WebcamPipeline extends OpenCvPipeline {
-        @Override
-        public Mat processFrame(Mat input) {
-            // Simply return the frame as-is for display
-            return input;
-        }
-    }
-    
-    
-    
-    
-    
+
     public void driveInDirection(double direction, double power, double right_stick) {
         double x = power*Math.cos(direction);
         double y = power*Math.sin(direction);
@@ -107,64 +77,36 @@ public class TeleOpDrive extends LinearOpMode {
         backLeft.setPower(bl / max);
         backRight.setPower(br / max);
     }
-    
-    //public void shoulderRotation(double amount) {
-        //leftShoulder.setPower(amount);
-        //rightShoulder.setPower(-amount);
-   // }
-    
-    //public void elbowRotation(double direction) {
-        
-        //if (direction == 1){
-            //elbow.setPower(0.8);
-        //} else if (direction == -1) {
-            //elbow.setPower(-0.1);
-        //} else {
-            //elbow.setPower(0.25);
-            //elbow.setPower(0);
-        //}
-        
-        // Correction if needed
-        /*if (Math.abs(elbow1.getPosition() + elbow2.getPosition() - 0.5) > 0.03) {
-            telemetry.addData("ouch", "ies");
-            elbow1.setPosition(0.5 - elbow2.getPosition());
-        }*/
-    //}
+
+    public void aimCannon() {
+        ;
+    }
+
+    public void cycleBall() {
+        ;
+    }
 
     @Override
     public void runOpMode() {
-        //control_Hub = hardwareMap.get(Blinker.class, "Control Hub");
-        //expansion_Hub_2 = hardwareMap.get(Blinker.class, "Expansion Hub 2");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
 
-        // Reverse left side motors
-        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-
         // Right side stays forward
         frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+
+        // Reverse left side motors
+        frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        //leftShoulder = hardwareMap.get(DcMotor.class, "left shoulder");
-        //rightShoulder = hardwareMap.get(DcMotor.class, "right shoulder");
-        //elbow = hardwareMap.get(DcMotor.class, "elbow");
-        //elbow1 = hardwareMap.get(Servo.class, "elbow1");
-        //elbow2 = hardwareMap.get(Servo.class, "elbow2");
-        //claw = hardwareMap.get(Servo.class, "claw");
-
-
-        
         imu = hardwareMap.get(IMU.class, "imu");
-        
-        
         IMU.Parameters params;
 
         params = new IMU.Parameters(
@@ -176,35 +118,10 @@ public class TeleOpDrive extends LinearOpMode {
         
         imu.initialize(params);
         
-        // Initialize webcam
-        try {
-            int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
-                "cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-            webcam = OpenCvCameraFactory.getInstance().createWebcam(
-                hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-            pipeline = new WebcamPipeline();
-            webcam.setPipeline(pipeline);
-            webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
-                @Override
-                public void onOpened() {
-                    webcam.startStreaming(320, 240);
-                    telemetry.addData("Webcam", "Initialized");
-                }
-                @Override
-                public void onError(int errorCode) {
-                    telemetry.addData("Webcam Error", errorCode);
-                }
-            });
-        } catch (Exception e) {
-            telemetry.addData("Webcam", "Failed to initialize: " + e.getMessage());
-        }
-        
         YawPitchRollAngles robotOrientation;
         double Yaw;
         double relativeDirection;
         
-        
-
         telemetry.addData("Status", "Initialized");
         telemetry.update();
         // Wait for the game to start (driver presses PLAY)
@@ -214,13 +131,11 @@ public class TeleOpDrive extends LinearOpMode {
         double y;
         double direction;
         double power;
-        
-        double jiggler = 0; // THIS WAS ETHAN'S IDEA
 
         boolean lastStart = false;
 
+        telemetry.addData("Status", "Running");
         // run until the end of the match (driver presses STOP)
-        
         
         while (opModeIsActive()) {
             robotOrientation = imu.getRobotYawPitchRollAngles();
@@ -242,31 +157,18 @@ public class TeleOpDrive extends LinearOpMode {
 
             direction = Math.atan2(x, y);
             Yaw = robotOrientation.getYaw(AngleUnit.RADIANS);
-            relativeDirection = direction - Yaw; // These next few lines are all for translating the yaw into the same format as the joystick
-            
-            /*
-            Yaw -= Math.PI/2;
-            if (Yaw < -Math.PI) {
-                Yaw += 2*Math.PI;
-            
-            } else if (Yaw > Math.PI) {
-                Yaw -= 2*Math.PI; 
-            }
-            */
+            relativeDirection = direction - Yaw;
 
             if (relativeDirection < -Math.PI) {
                 relativeDirection += 2*Math.PI;
             } else if (relativeDirection > Math.PI) {
                 relativeDirection -= 2*Math.PI;
             }
-
-            
-    
-    
+                
             if(this.gamepad1.left_trigger > 0.3) {
-                power = Math.min(1.0, Math.sqrt(x*x + y*y) * 1.5); // this is if we need to go fast
+                power = Math.min(1.0, Math.hypot(x,y) * 1.5); // this is if we need to go fast
             } else {
-                power = Math.min(1.0, Math.sqrt(x*x + y*y) * 0.5); // this is without the button, so it moves a little slower for precision
+                power = Math.min(1.0, Math.hypot(x,y) * 0.5); // this is without the button, so it moves a little slower for precision
             }
             
             if (gamepad1.start && !lastStart) {
@@ -274,75 +176,16 @@ public class TeleOpDrive extends LinearOpMode {
             }
             lastStart = gamepad1.start;
             
-            //telemetry.addData("Joystick Direction", String.valueOf(direction));
-            //telemetry.addData("Yaw", String.valueOf(Yaw));
-            //telemetry.addData("Relative Direction", String.valueOf(relativeDirection));
-            //telemetry.addData("Drive Power", String.valueOf(power));
+            telemetry.addData("Joystick Direction", String.valueOf(direction));
+            telemetry.addData("Yaw", String.valueOf(Yaw));
+            telemetry.addData("Relative Direction", String.valueOf(relativeDirection));
+            telemetry.addData("Drive Power", String.valueOf(power));
 
             driveInDirection(relativeDirection, power, turn);            
             
-            //if (Math.abs(this.gamepad2.left_stick_y) < 0.5) {
-                //if (this.gamepad2.left_trigger > 0.4) {
-                    //elbowRotation(-1);
-                //} else if (this.gamepad2.left_bumper) {
-                    //elbowRotation(1);
-                //} else {
-                    //elbowRotation(0);
-                //}
-                
-                //if (this.gamepad2.right_trigger > 0.3) {
-                    //shoulderRotation(0.3);
-                //} else if (this.gamepad2.right_bumper) {
-                    //shoulderRotation(-0.5);
-               // } else {
-                    /*
-                    if (jiggler >= 3) {
-                        shoulderRotation(-0.2);
-                    } else if (jiggler >= 6) {
-                        jiggler = 1;
-                        shoulderRotation(0.2);
-                    } else {
-                        shoulderRotation(0.2);
-                    }*/
-                    //shoulderRotation(-0.1);
-                //}
-            //jiggler++;
-                
-            //} else {
-                //if (this.gamepad2.left_stick_y > 0) {
-                    //shoulderRotation(0.5);
-                    //elbowRotation(1);
-                //} else {
-                   // elbowRotation(-1);
-                    //shoulderRotation(-0.5);
-                //}
-            //}
-            
-            //if (this.gamepad2.dpad_down) {
-               // elbow.setPower(-1.2);
-           // }
-            
-            // Set claw position
-            //if (this.gamepad2.a) {
-               // claw.setPosition(0.62);
-            //} else if (this.gamepad2.b) {
-                //claw.setPosition(0.12);
-            //}
-            
-            
-            
-            
-            //telemetry.addData("Elbow", (double)elbow1.getPosition());
-            //telemetry.addData("Left stick", (double)this.gamepad2.left_stick_y);
-            
-            telemetry.addData("Status", "Running");
             telemetry.update();
-
         }
-        
     }
-
-    
 }
 
 
