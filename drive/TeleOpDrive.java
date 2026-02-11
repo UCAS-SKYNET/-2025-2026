@@ -55,6 +55,11 @@ public class TeleOpDrive extends LinearOpMode {
     private DcMotor backRight;
     private DcMotor frontLeft;
     private DcMotor frontRight;
+
+    private DcMotor flywheel;
+    private DcMotor funnelLeft;
+    private DcMotor funnelRight;
+    private DcMotor cycler;
     
     private IMU imu;
 
@@ -78,10 +83,6 @@ public class TeleOpDrive extends LinearOpMode {
         backRight.setPower(br / max);
     }
 
-    public void aimCannon() {
-        ;
-    }
-
     public void cycleBall() {
         ;
     }
@@ -93,18 +94,22 @@ public class TeleOpDrive extends LinearOpMode {
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
 
-        // Right side stays forward
-        frontRight.setDirection(DcMotorSimple.Direction.FORWARD);
-        backRight.setDirection(DcMotorSimple.Direction.FORWARD);
+        flywheel = hardwareMap.get(DcMotor.class, "flywheel");
+        funnelLeft = hardwareMap.get(DcMotor.class, "funnelLeft");
+        funnelRight = hardwareMap.get(DcMotor.class, "funnelRight");
+        cycler = hardwareMap.get(DcMotor.class, "cycler");
 
-        // Reverse left side motors
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        funnelLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        funnelLeft.setPower(1);
+        funnelRight.setPower(1);
 
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters params;
