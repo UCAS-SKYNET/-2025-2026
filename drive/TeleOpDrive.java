@@ -83,8 +83,9 @@ public class TeleOpDrive extends LinearOpMode {
         backRight.setPower(br / max);
     }
 
-    public void cycleBall() {
-        ;
+    public void cycleBall(double power) {
+        flywheel.setPower(Math.min(power*1000, 1.0));
+        cycler.setPower(power);
     }
 
     @Override
@@ -131,7 +132,7 @@ public class TeleOpDrive extends LinearOpMode {
         telemetry.update();
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        
+
         double x;
         double y;
         double direction;
@@ -186,8 +187,9 @@ public class TeleOpDrive extends LinearOpMode {
             telemetry.addData("Relative Direction", String.valueOf(relativeDirection));
             telemetry.addData("Drive Power", String.valueOf(power));
 
-            driveInDirection(relativeDirection, power, turn);            
-            
+            driveInDirection(relativeDirection, power, turn);
+            cycleBall(gamepad1.right_trigger);
+
             telemetry.update();
         }
     }
