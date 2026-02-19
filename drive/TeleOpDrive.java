@@ -57,9 +57,9 @@ public class TeleOpDrive extends LinearOpMode {
     private DcMotor frontRight;
 
     private DcMotor flywheel;
-    private DcMotor funnelLeft;
-    private DcMotor funnelRight;
-    private DcMotor cycler;
+    private DcMotor funnel;
+    private DcMotor cycler1;
+    private DcMotor cycler2;
     
     private IMU imu;
 
@@ -84,8 +84,12 @@ public class TeleOpDrive extends LinearOpMode {
     }
 
     public void cycleBall(double power) {
-        flywheel.setPower(Math.min(power*1000, 1.0));
-        cycler.setPower(power);
+        cycler1.setPower(power);
+        cycler2.setPower(power);
+    }
+    
+    public void spinFlywheel(double power) {
+        flywheel.setPower(power);
     }
 
     @Override
@@ -96,21 +100,19 @@ public class TeleOpDrive extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
 
         flywheel = hardwareMap.get(DcMotor.class, "flywheel");
-        funnelLeft = hardwareMap.get(DcMotor.class, "funnelLeft");
-        funnelRight = hardwareMap.get(DcMotor.class, "funnelRight");
-        cycler = hardwareMap.get(DcMotor.class, "cycler");
+        funnel = hardwareMap.get(DcMotor.class, "funnel");
+        cycler1 = hardwareMap.get(DcMotor.class, "cycler1");
+        cycler2 = hardwareMap.get(DcMotor.class, "cycler2");
 
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        funnelLeft.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        funnelLeft.setPower(1);
-        funnelRight.setPower(1);
+        funnel.setPower(1);
 
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters params;
@@ -133,8 +135,6 @@ public class TeleOpDrive extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        double x;
-        double y;
         double direction;
         double power;
 
@@ -150,18 +150,16 @@ public class TeleOpDrive extends LinearOpMode {
                 ? gamepad1.right_stick_x * 0.6
                 : 0;
             
-            double rawX = -gamepad1.left_stick_x;
-            double rawY = gamepad1.left_stick_y;
-
-            if (Math.hypot(rawX, rawY) < 0.05) {
+            double xl1 = -gamepad1.left_stick_x;
+            double yl1 = gamepad1.left_stick_y;
+            
+            // KEEP WORKING HERE
+            if (Math.hypot(xl1, yl1) < 0.05) {
                 driveInDirection(0, 0, turn);
                 continue;
             }
 
-            x = rawX;
-            y = rawY;
-
-            direction = Math.atan2(x, y);
+            direction = Math.atan2(xl1, yl1);
             Yaw = robotOrientation.getYaw(AngleUnit.RADIANS);
             relativeDirection = direction - Yaw;
 
@@ -172,9 +170,9 @@ public class TeleOpDrive extends LinearOpMode {
             }
                 
             if(this.gamepad1.left_trigger > 0.3) {
-                power = Math.min(1.0, Math.hypot(x,y) * 1.5); // this is if we need to go fast
+                power = Math.min(1.0, Math.hypot(xl1,yl1) * 1.5); // this is if we need to go fast
             } else {
-                power = Math.min(1.0, Math.hypot(x,y) * 0.5); // this is without the button, so it moves a little slower for precision
+                power = Math.min(1.0, Math.hypot(xl1,yl1) * 0.5); // this is without the button, so it moves a little slower for precision
             }
             
             if (gamepad1.start && !lastStart) {
@@ -186,16 +184,19 @@ public class TeleOpDrive extends LinearOpMode {
             telemetry.addData("Yaw", String.valueOf(Yaw));
             telemetry.addData("Relative Direction", String.valueOf(relativeDirection));
             telemetry.addData("Drive Power", String.valueOf(power));
+            
+            double xl2 = -gamepad1.left_stick_x;
+            double yl2 = gamepad1.left_stick_y;
+
+            // KEEP WORKING HERE
+            if (Math.hypot(xl2, yl2) < 0.05) {
+                driveInDirection(0, 0, turn);
+                continue;
+            }
 
             driveInDirection(relativeDirection, power, turn);
-            cycleBall(gamepad1.right_trigger);
 
             telemetry.update();
         }
     }
 }
-
-
-
-
-
