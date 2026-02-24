@@ -112,8 +112,6 @@ public class TeleOpDrive extends LinearOpMode {
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        funnel.setPower(1);
-
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters params;
 
@@ -135,6 +133,8 @@ public class TeleOpDrive extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+        funnel.setPower(1);
+
         double direction;
         double power;
 
@@ -153,48 +153,53 @@ public class TeleOpDrive extends LinearOpMode {
             double xl1 = -gamepad1.left_stick_x;
             double yl1 = gamepad1.left_stick_y;
             
-            // KEEP WORKING HERE
             if (Math.hypot(xl1, yl1) < 0.05) {
                 driveInDirection(0, 0, turn);
-                continue;
-            }
-
-            direction = Math.atan2(xl1, yl1);
-            Yaw = robotOrientation.getYaw(AngleUnit.RADIANS);
-            relativeDirection = direction - Yaw;
-
-            if (relativeDirection < -Math.PI) {
-                relativeDirection += 2*Math.PI;
-            } else if (relativeDirection > Math.PI) {
-                relativeDirection -= 2*Math.PI;
-            }
-                
-            if(this.gamepad1.left_trigger > 0.3) {
-                power = Math.min(1.0, Math.hypot(xl1,yl1) * 1.5); // this is if we need to go fast
             } else {
-                power = Math.min(1.0, Math.hypot(xl1,yl1) * 0.5); // this is without the button, so it moves a little slower for precision
+                direction = Math.atan2(xl1, yl1);
+                Yaw = robotOrientation.getYaw(AngleUnit.RADIANS);
+                relativeDirection = direction - Yaw;
+
+                if (relativeDirection < -Math.PI) {
+                    relativeDirection += 2*Math.PI;
+                } else if (relativeDirection > Math.PI) {
+                    relativeDirection -= 2*Math.PI;
+                }
+                    
+                if(this.gamepad1.left_trigger > 0.3) {
+                    power = Math.min(1.0, Math.hypot(xl1,yl1) * 1.5); // this is if we need to go fast
+                } else {
+                    power = Math.min(1.0, Math.hypot(xl1,yl1) * 0.5); // this is without the button, so it moves a little slower for precision
+                }
+                
+                lastStart = gamepad1.start;
+                
+                telemetry.addData("Joystick Direction", String.valueOf(direction));
+                telemetry.addData("Yaw", String.valueOf(Yaw));
+                telemetry.addData("Relative Direction", String.valueOf(relativeDirection));
+                telemetry.addData("Drive Power", String.valueOf(power));
+                
+                driveInDirection(relativeDirection, power, turn);
             }
-            
+
+            double yl2 = gamepad2.left_stick_y;
+            double yr2 = gamepad2.right_stick_y;
+
+            if (Math.abs(yl2) > 0.05) {
+                cycleBall(yl2);
+            } else {
+                cycleBall(0);
+            }
+
+            if (Math.abs(yr2) > 0.05) {
+                spinFlywheel(yr2);
+            } else {
+                spinFlywheel(0);
+            }            
+
             if (gamepad1.start && !lastStart) {
                 imu.resetYaw();
             }
-            lastStart = gamepad1.start;
-            
-            telemetry.addData("Joystick Direction", String.valueOf(direction));
-            telemetry.addData("Yaw", String.valueOf(Yaw));
-            telemetry.addData("Relative Direction", String.valueOf(relativeDirection));
-            telemetry.addData("Drive Power", String.valueOf(power));
-            
-            double xl2 = -gamepad1.left_stick_x;
-            double yl2 = gamepad1.left_stick_y;
-
-            // KEEP WORKING HERE
-            if (Math.hypot(xl2, yl2) < 0.05) {
-                driveInDirection(0, 0, turn);
-                continue;
-            }
-
-            driveInDirection(relativeDirection, power, turn);
 
             telemetry.update();
         }
