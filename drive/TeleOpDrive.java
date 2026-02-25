@@ -172,8 +172,6 @@ public class TeleOpDrive extends LinearOpMode {
                     power = Math.min(1.0, Math.hypot(xl1,yl1) * 0.5); // this is without the button, so it moves a little slower for precision
                 }
                 
-                lastStart = gamepad1.start;
-                
                 telemetry.addData("Joystick Direction", String.valueOf(direction));
                 telemetry.addData("Yaw", String.valueOf(Yaw));
                 telemetry.addData("Relative Direction", String.valueOf(relativeDirection));
@@ -200,6 +198,7 @@ public class TeleOpDrive extends LinearOpMode {
             if (gamepad1.start && !lastStart) {
                 imu.resetYaw();
             }
+            lastStart = gamepad1.start;
 
             telemetry.update();
         }
