@@ -185,14 +185,14 @@ public class TeleOpDrive extends LinearOpMode {
             double yl2 = gamepad2.left_stick_y;
             double yr2 = gamepad2.right_stick_y;
 
-            if (Math.abs(yl2) > 0.05) {
-                cycleBall(yl2);
+            if (Math.abs(yr2) > 0.05) {
+                cycleBall(yr2);
             } else {
                 cycleBall(0);
             }
 
-            if (Math.abs(yr2) > 0.05) {
-                spinFlywheel(yr2);
+            if (Math.abs(yl2) > 0.05) {
+                spinFlywheel(yl2);
             } else {
                 spinFlywheel(0);
             }            
