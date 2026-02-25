@@ -106,6 +106,10 @@ public class TeleOpDrive extends LinearOpMode {
 
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        flywheel.setDirection(DcMotorSimple.Direction.REVERSE);
+        cycler1.setDirection(DcMotorSimple.Direction.REVERSE);
+        cycler2.setDirection(DcMotorSimple.Direction.REVERSE);
+        
 
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -156,7 +160,7 @@ public class TeleOpDrive extends LinearOpMode {
             if (Math.hypot(xl1, yl1) < 0.05) {
                 driveInDirection(0, 0, turn);
             } else {
-                direction = Math.atan2(xl1, yl1);
+                direction = Math.atan2(yl1, xl1);
                 Yaw = robotOrientation.getYaw(AngleUnit.RADIANS);
                 relativeDirection = direction - Yaw;
 
