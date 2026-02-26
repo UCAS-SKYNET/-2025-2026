@@ -75,19 +75,41 @@ public class AutonomousModeRight extends LinearOpMode {
         while (opModeIsActive()) {
             
             double timeInSeconds = runtime.seconds() - delayedRun;
-            
-            if(timeInSeconds <= 0.5) {
-                driveInDirection(forward, 0.2, 0);
+            //Assuming 12 inches in one sec
+            if(timeInSeconds <= 1.6) {
+                driveInDirection(forward, 1, 0);
                 telemetry.addData("Phase", 1);
-            } else if (timeInSeconds <= 2) {
-                driveInDirection(right, 0.6, 0);
+            } else if (timeInSeconds <= 3.2) {
+                driveInDirection(0, 0, 1);
                 telemetry.addData("Phase", 2);
-            } else if (timeInSeconds <= 3) {
-                driveInDirection(backward, 0.2, 0);
+            } else if (timeInSeconds <= 5.2) {
+                driveInDirection(forward, 1, 0);
                 telemetry.addData("Phase", 3);
+            } else if (timeInSeconds <= 8.0) {
+                driveInDirection(backward, 1, 0);
+                telemetry.addData("Phase", 4);
+            } else if (timeInSeconds <= 9.6) {
+                driveInDirection(0, 0, -1);
+                telemetry.addData("Phase", 5);
+            } else if (timeInSeconds <= 12) {
+                driveInDirection(forward, 1, 0);
+                telemetry.addData("Phase", 6);
+            } else if (timeInSeconds <= 12.8) {
+                driveInDirection(0, 0, 1);
+                telemetry.addData("Phase", 7);
+            //pew pew function x3
+            } else if (timeInSeconds <= 13.6) {
+                driveInDirection(0, 0, -1);
+                telemetry.addData("Phase", 8);
+            } else if (timeInSeconds <= 17.6) {
+                driveInDirection(backward, 1, 0);
+                telemetry.addData("Phase", 9);
+            } else if (timeInSeconds <= 20.0) {
+                driveInDirection(right, 1, 0);
+                telemetry.addData("Phase", 10);
             } else {
                 driveInDirection(0, 0, 0);
-                telemetry.addData("Phase", 4);
+                telemetry.addData("Phase", 11);
             }
             
             telemetry.addData("Time", runtime.seconds());
