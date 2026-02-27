@@ -102,7 +102,7 @@ public class AutonomousModeLeft extends LinearOpMode {
             } else if (timeInSeconds <= 12.8) {
                 driveInDirection(0, 0, -1);
                 telemetry.addData("Phase", 7);
-
+            //pew pew function x3
             } else if (timeInSeconds <= 13.6) {
                 driveInDirection(0, 0, 1);
                 telemetry.addData("Phase", 8);
