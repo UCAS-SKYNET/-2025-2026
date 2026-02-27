@@ -30,22 +30,35 @@ public class AutonomousModeRight extends LinearOpMode {
     private DcMotor backRight;
     private DcMotor frontLeft;
     private DcMotor frontRight;
-    //private DcMotor leftShoulder;
-    //private DcMotor rightShoulder;
-    //private Servo elbow1;
-    //private Servo elbow2;
-    //private DcMotor elbow;
+    
+    private DcMotor flywheel;
+    private DcMotor funnel;
+    private DcMotor cycler1;
+    private DcMotor cycler2;
+    
+    private Servo servoLeft;
+    private Servo servoRight;
     
     private ElapsedTime runtime = new ElapsedTime();
     
     public void driveInDirection(double direction, double power, double right_stick) {
-        double x = power*Math.cos(direction);
-        double y = power*Math.sin(direction);
+        double x = power * Math.sin(direction);
+        double y = power * Math.cos(direction);
         
-        frontLeft.setPower(-(y-x-right_stick)); 
-        frontRight.setPower(-(y+x+right_stick));
-        backLeft.setPower(-(y+x-right_stick));
-        backRight.setPower((y-x+right_stick));
+        double fl = y + x - right_stick;
+        double fr = y - x + right_stick;
+        double bl = y - x - right_stick;
+        double br = y + x + right_stick;
+
+        double max = Math.max(1.0,
+            Math.max(Math.abs(fl),
+            Math.max(Math.abs(fr),
+            Math.max(Math.abs(bl), Math.abs(br)))));
+
+        frontLeft.setPower(fl / max);
+        frontRight.setPower(fr / max);
+        backLeft.setPower(bl / max);
+        backRight.setPower(br / max);
     }
     
     public void runOpMode() {
@@ -55,17 +68,33 @@ public class AutonomousModeRight extends LinearOpMode {
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        //leftShoulder = hardwareMap.get(DcMotor.class, "left shoulder");
-        //rightShoulder = hardwareMap.get(DcMotor.class, "right shoulder");
-        //elbow1 = hardwareMap.get(Servo.class, "elbow1");
-        //elbow2 = hardwareMap.get(Servo.class, "elbow2");
-        //elbow = hardwareMap.get(DcMotor.class, "elbow");
-        
+
+        flywheel = hardwareMap.get(DcMotor.class, "flywheel");
+        funnel = hardwareMap.get(DcMotor.class, "funnel");
+        cycler1 = hardwareMap.get(DcMotor.class, "cycler1");
+        cycler2 = hardwareMap.get(DcMotor.class, "cycler2");
+
+        servoLeft = hardwareMap.get(Servo.class, "servoLeft");
+        servoRight = hardwareMap.get(Servo.class, "servoRight");
+
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        flywheel.setDirection(DcMotorSimple.Direction.REVERSE);
+        cycler1.setDirection(DcMotorSimple.Direction.REVERSE);
+        cycler2.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         waitForStart();
+
+        servoLeft.setPosition(0.8);
+        servoRight.setPosition(.2);
         
         double timer;
         
-        double forward = Math.PI/2;
+        double forward = Math.PI/2; // These may need to be modified
         double right = Math.PI;
         double left = 0;
         double backward = Math.PI/-2;
