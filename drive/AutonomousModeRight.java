@@ -126,19 +126,26 @@ public class AutonomousModeRight extends LinearOpMode {
             } else if (timeInSeconds <= 12.8) {
                 driveInDirection(0, 0, 1);
                 telemetry.addData("Phase", 7);
-            //pew pew function x3
-            } else if (timeInSeconds <= 13.6) {
-                driveInDirection(0, 0, -1);
+                flywheel.setPower(1);
+            } else if (timeInSeconds <= 14.8) {
+                cycler1.setPower(1);
+                cycler2.setPower(1);
                 telemetry.addData("Phase", 8);
-            } else if (timeInSeconds <= 17.6) {
-                driveInDirection(backward, 1, 0);
+            } else if (timeInSeconds <= 15.6) {
+                flywheel.setPower(0);
+                cycler1.setPower(0);
+                cycler2.setPower(0);
+                driveInDirection(0, 0, -1);
                 telemetry.addData("Phase", 9);
-            } else if (timeInSeconds <= 20.0) {
-                driveInDirection(right, 1, 0);
+            } else if (timeInSeconds <= 19.6) {
+                driveInDirection(backward, 1, 0);
                 telemetry.addData("Phase", 10);
+            } else if (timeInSeconds <= 22.0) {
+                driveInDirection(right, 1, 0);
+                telemetry.addData("Phase", 11);
             } else {
                 driveInDirection(0, 0, 0);
-                telemetry.addData("Phase", 11);
+                telemetry.addData("Phase", 12);
             }
             
             telemetry.addData("Time", runtime.seconds());
